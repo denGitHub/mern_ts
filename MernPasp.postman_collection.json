@@ -1,0 +1,1203 @@
+{
+	"info": {
+		"_postman_id": "f780a0e4-a105-4a6a-8de6-6c90c83cd796",
+		"name": "MernPasp",
+		"description": "# Overview \nThis microservice manages users, roles, permissions guests and authentication. \n\n## Dependencies\n[ftekos-services](https://github.com/Frankentek/ftekos-services)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Permissions",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/permissions?",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"permissions"
+							],
+							"query": [
+								{
+									"key": "orderBy",
+									"value": "created",
+									"description": "order by column",
+									"disabled": true
+								},
+								{
+									"key": "orderByDirection",
+									"value": "desc ",
+									"description": "order by direction. values: asc,desc",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "100",
+									"description": "record limit",
+									"disabled": true
+								},
+								{
+									"key": "skip",
+									"value": "0",
+									"description": "offset",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### Description\nReturns a list of all permissions"
+					},
+					"response": []
+				},
+				{
+					"name": "Get By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/permissions/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"permissions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "a1f672e9-83b5-43b7-8d7b-418ed4a7b0d5",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description  \nGets permissions info based on ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Manage data\",\n    \"key\": \"manage_data\",\n    \"acl\": [\n      {\n        \"resources\": [\n          \"/api/projects/\",\"/api/projects/:id\",\n          \"/v1/decks\", \"/v1/decks/:id\",\n          \"/v1/security-levels\", \"/v1/security-levels/:id\",\n          \"/v1/mooring-positions\", \"/v1/mooring-positions/:id\"\n        ],\n        \"methods\": [\"get\", \"post\", \"put\", \"patch\", \"delete\"]\n      },\n    \n      {\n        \"resources\": [\n          \"/v1/roles\", \"/v1/roles/:id\",\n          \"/v1/users\", \"/v1/users/:id\",\n          \"/v1/permissions\", \"/v1/permissions/:id\"\n        ],\n        \"methods\": [\"get\"]\n      }\n    ]\n  }"
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/permissions",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"permissions"
+							]
+						},
+						"description": "### Description    \nCreates new permission\n\n###### Schema  \n```\n{  \n\tname: { type: \"string\", required: true },\n\tkey: { type: \"string\", required: true },\n\tresources: { type: \"string\", required: true },\n\tpermissions: { enum: [\"get\", \"post\", \"put\", \"patch\", \"delete\"], required: true },\n\tacl: [ { resources: { type: \"string\", required: true }, permissions: [ { type: \"string\", required: true } ] } ]\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Deckhand\",\n    \"key\": \"ROLE_DECKHAND\",\n    \"acl\": [\n        {\n            \"permissions\": [\n                \"get\"\n            ],\n            \"resources\": [\n                \"/v1/boat\",\n                \"/v1/decks\",\n                \"/v1/decks/:id\",\n                \"/v1/security-levels\",\n                \"/v1/alarmpaths\",\n                \"/v1/alarmpaths/:id\",\n                \"/v1/services\",\n                \"/v1/services/:name\",\n                \"/v1/roles\",\n                \"/v1/roles/:id\",\n                \"/v1/users\",\n                \"/v1/users/profile\",\n                \"/v1/cameras\",\n                \"/v1/cameras/:id\",\n                \"/v1/decksensors\",\n                \"/v1/decksensors/:id\",\n                \"/v1/doors\",\n                \"/v1/doors/:id\",\n                \"/v1/eventlogs\",\n                \"/v1/eventlogs/:id\",\n                \"/v1/files\",\n                \"/v1/files/:id\"\n            ],\n            \"_id\": \"116b5ab0-9945-46c3-88cd-c127856f2da2\"\n        },\n        {\n            \"permissions\": [\n                \"post\"\n            ],\n            \"resources\": [\n                \"/v1/alarmpaths/search\",\n                \"/v1/users/search\",\n                \"/v1/cameras/search\",\n                \"/v1/decksensors/search\",\n                \"/v1/doors/search\",\n                \"/v1/eventlogs/search\",\n                \"/v1/files/search\"\n            ],\n            \"_id\": \"beb1c467-3913-47b2-865f-70b2188a8007\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/permissions/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"permissions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "a1f672e9-83b5-43b7-8d7b-418ed4a7b0d5",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description    \nUpdates permission info"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{API_URL}}/api/permissions/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"permissions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5df78e93bbfdcc03e1020c37",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description    \nDeletes permission"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/users?",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"users"
+							],
+							"query": [
+								{
+									"key": "orderBy",
+									"value": "created",
+									"description": "order by column",
+									"disabled": true
+								},
+								{
+									"key": "orderByDirection",
+									"value": "desc ",
+									"description": "order by direction. values: asc,desc",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "100",
+									"description": "record limit",
+									"disabled": true
+								},
+								{
+									"key": "skip",
+									"value": "0",
+									"description": "offset",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### Description\nReturns a list of all users"
+					},
+					"response": []
+				},
+				{
+					"name": "Check username",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/users/check-username/:username",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"check-username",
+								":username"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "your-username",
+									"description": "username"
+								}
+							]
+						},
+						"description": "### Description   \nChecks if user exists"
+					},
+					"response": []
+				},
+				{
+					"name": "Get by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/users/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2a220425-aeba-43c1-bbb5-548901722025",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description  \nGets user info based on ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Get by Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/users/email/:email",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"email",
+								":email"
+							],
+							"variable": [
+								{
+									"key": "email",
+									"value": "your-email@email.com",
+									"description": "email address"
+								}
+							]
+						},
+						"description": "### Description  \nGets user info based on email address"
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"username\",\n  \"password\": \"ChangeMe!123\",\n  \"email\": \"your-email@email.com\",\n  \"firstName\": \"First\",\n  \"lastName\": \"Last\",\n  \"phoneNumber\": \"+18888888888\",\n  \"roles\": [\"07b93922-907b-4b15-a1e6-d77f27a590d0\", \"a5d99832-adb5-473e-9c21-568f815c6ce6\"],\n  \"status\": \"out\"\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/users",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"users"
+							]
+						},
+						"description": "### Description    \nCreates new user\n\n###### Schema  \n```\n{  \n\tusername: { type: \"string\", required: true },\n    password: { type: \"string\", required: true },\n    firstName: { type: \"string\", required: true },\n    lastName: { type: \"string\", required: true },\n    email: { type: \"string\", required: true },\n    phoneNumber: { type: \"string\", required: false },\n    roles: { type: \"uuid\", required: false },\n    status: { enum: [\"in\", \"out\", \"onLeave\"], required: true }\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"searchText\": \"\",\n  \"roles\": [\"07b93922-907b-4b15-a1e6-d77f27a590d0\"]\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/users/search?",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"search"
+							],
+							"query": [
+								{
+									"key": "orderBy",
+									"value": "created",
+									"description": "order by column",
+									"disabled": true
+								},
+								{
+									"key": "orderByDirection",
+									"value": "desc ",
+									"description": "order by direction. values: asc,desc",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "100",
+									"description": "record limit",
+									"disabled": true
+								},
+								{
+									"key": "skip",
+									"value": "0",
+									"description": "offset",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### Description  \nSearches user info"
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"username\",\n  \"password\": \"ChangeMe!123\"\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/users/authenticate",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"authenticate"
+							]
+						},
+						"description": "### Description  \nValidates username and password"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"your-email@email.com\",\n\t\"firstName\": \"First\",\n\t\"lastName\": \"Last\",\n\t\"phoneNumber\": \"+18888888888\",\n\t\"roles\": [\"a5d99832-adb5-473e-9c21-568f815c6ce6\"]\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/users/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2a220425-aeba-43c1-bbb5-548901722025",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description    \nUpdates user info"
+					},
+					"response": []
+				},
+				{
+					"name": "Change password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"password\": \"ptn65HAN!\"\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/users/change-password/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"change-password",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2a220425-aeba-43c1-bbb5-548901722025",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description    \nUpdates user password"
+					},
+					"response": []
+				},
+				{
+					"name": "Partial Update",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"First\",\n\t\"roles\": [\"a5d99832-adb5-473e-9c21-568f815c6ce6\"]\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/users/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2a220425-aeba-43c1-bbb5-548901722025",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description  \nUpdates specific pieces of user info"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/users/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2a220425-aeba-43c1-bbb5-548901722025",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description  \nDeletes user"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/roles?",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"roles"
+							],
+							"query": [
+								{
+									"key": "orderBy",
+									"value": "created",
+									"description": "order by column",
+									"disabled": true
+								},
+								{
+									"key": "orderByDirection",
+									"value": "desc ",
+									"description": "order by direction. values: asc,desc",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "100",
+									"description": "record limit",
+									"disabled": true
+								},
+								{
+									"key": "skip",
+									"value": "0",
+									"description": "offset",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### Description  \nReturns a list of all roles"
+					},
+					"response": []
+				},
+				{
+					"name": "Get By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/roles/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"roles",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "143eefcc-6e73-4dc4-87ef-fa86cea6b12a",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description    \nGets role info based on ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Admin\",\n\t\"key\": \"ROLE_ADMIN\",\n\t\"permissions\": [\n\t\t\"b884cbc0-498c-4962-a1c1-5dba8de866b8\"\t\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/roles",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"roles"
+							]
+						},
+						"description": "### Description  \nCreates new role\n\n###### Schema  \n```\n{  \n\tname: { type: \"string\", required: true },\n\tkey: { type: \"string\", required: true },\n\tpermissions: [{ \n\t\ttype: \"uuid\", required: true\n\t}]\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Admin\",\n\t\"key\": \"ROLE_ADMIN\"\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/roles/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"roles",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "143eefcc-6e73-4dc4-87ef-fa86cea6b12a",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description    \nUpdates role info"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/roles/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"roles",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "143eefcc-6e73-4dc4-87ef-fa86cea6b12a",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description  \nDeletes role"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Guests",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/guests?",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"guests"
+							],
+							"query": [
+								{
+									"key": "orderBy",
+									"value": "created",
+									"description": "order by column",
+									"disabled": true
+								},
+								{
+									"key": "orderByDirection",
+									"value": "desc ",
+									"description": "order by direction. values: asc,desc",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "100",
+									"description": "record limit",
+									"disabled": true
+								},
+								{
+									"key": "skip",
+									"value": "0",
+									"description": "offset",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### Description    \nReturns a list of all guests"
+					},
+					"response": []
+				},
+				{
+					"name": "Get By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/guests/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"guests",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "8adcc03e-e8f8-4470-846c-11c0ef0440dc",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description    \nGets guest info based on ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"First\",\n\t\"lastName\": \"Last\"\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/guests",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"guests"
+							]
+						},
+						"description": "### Description  \nCreates new guest\n\n###### Schema  \n```\n{  \n\tfirstName: { type: \"string\", required: false },\n\tlastName: { type: \"string\", required: false },\n\temail: { type: \"string\", required: false },\n\tphoneNumber: { type: \"string\", required: false },\n\tpassportNumber: { type: \"string\", required: false },\n\tstatus: { enum: [\"in\", \"out\"], required: true }\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\": [\"in\", \"out\"]\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/guests/search?",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"guests",
+								"search"
+							],
+							"query": [
+								{
+									"key": "orderBy",
+									"value": "created",
+									"description": "order by column",
+									"disabled": true
+								},
+								{
+									"key": "orderByDirection",
+									"value": "desc ",
+									"description": "order by direction. values: asc,desc",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "100",
+									"description": "record limit",
+									"disabled": true
+								},
+								{
+									"key": "skip",
+									"value": "0",
+									"description": "offset",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### Description  \nSearches guest info"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"First\",\n\t\"lastName\": \"Last\"\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/guests/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"guests",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "8adcc03e-e8f8-4470-846c-11c0ef0440dc",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description  \nUpdates guest info"
+					},
+					"response": []
+				},
+				{
+					"name": "Partial Update",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"First\",\n\t\"lastName\": \"Last\"\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/guests/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"guests",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "8adcc03e-e8f8-4470-846c-11c0ef0440dc",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description  \nUpdates specific pieces of guest info"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{API_URL}}/v1/guests/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"guests",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "8adcc03e-e8f8-4470-846c-11c0ef0440dc",
+									"description": "uuid"
+								}
+							]
+						},
+						"description": "### Description  \nDeletes guest"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "People",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Account",
+								"value": "E056BA37-7E9E-49BD-BBC2-115DF9747878"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/people?orderBy=lastName&orderByDirection=asc",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"people"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100",
+									"description": "record limit",
+									"disabled": true
+								},
+								{
+									"key": "skip",
+									"value": "0",
+									"description": "offset",
+									"disabled": true
+								},
+								{
+									"key": "orderBy",
+									"value": "lastName"
+								},
+								{
+									"key": "orderByDirection",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Account",
+								"value": "E056BA37-7E9E-49BD-BBC2-115DF9747878"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/people/92332b34-d5ca-4ea2-9f22-c3a92d4737d0",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"people",
+								"92332b34-d5ca-4ea2-9f22-c3a92d4737d0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Account",
+								"value": "E056BA37-7E9E-49BD-BBC2-115DF9747878"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\": [\"in\", \"out\"]\n}"
+						},
+						"url": {
+							"raw": "{{API_URL}}/v1/people/search?",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"v1",
+								"people",
+								"search"
+							],
+							"query": [
+								{
+									"key": "orderBy",
+									"value": "created",
+									"description": "order by column",
+									"disabled": true
+								},
+								{
+									"key": "orderByDirection",
+									"value": "desc ",
+									"description": "order by direction. values: asc,desc",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "100",
+									"description": "record limit",
+									"disabled": true
+								},
+								{
+									"key": "skip",
+									"value": "0",
+									"description": "offset",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
